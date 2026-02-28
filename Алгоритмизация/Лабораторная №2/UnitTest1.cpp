@@ -12,7 +12,7 @@ namespace UnitTest1
 		
 		TEST_METHOD(TestMethod1)
 		{
-			int n = 10;
+			int n = 1;
 			double result1 = simpson_rule(function1, 5, 6, n);
 			double result2 = simpson_rule(function2, 5, 6, n);
 			double result = result1 - result2;
