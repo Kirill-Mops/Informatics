@@ -24,7 +24,7 @@ double function2(double x) {
 }
 
 int main() {
-    for (int n = 1;  n < 10001; n*=10) {
+    for (int n = 1;  n < 100001; n*=10) {
         double result1 = simpson_rule(function1, 5, 6, n);
         double result2 = simpson_rule(function2, 5, 6, n);
         double result = result1 - result2;
