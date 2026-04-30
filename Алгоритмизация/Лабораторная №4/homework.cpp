@@ -13,8 +13,7 @@ auto measure_execution_time(Func&& func, Args&&... args) {
     auto result = func(std::forward<Args>(args)...);  // Выполняем переданную функцию с аргументами
     auto end_time = std::chrono::high_resolution_clock::now();  // Останавливаем отсчет времени
 
-    //auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);  // Вычисляем продолжительность
-    std::chrono::duration<double, std::milli> duration = end_time - start_time;
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);  // Вычисляем продолжительность
     return std::make_pair(result, duration.count());  // Возвращаем результат и время выполнения
 }
 
@@ -74,12 +73,13 @@ std::vector<int> make_ParallelQuickSort_sort(std::vector<int>& vec, int num_thre
 }
 
 int main() {
+    std::srand(std::time(nullptr));
 
     int sizes[] = { 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000, 10000000 };
 
     for (int N : sizes) {
         std::vector<int> vec = make_vector(N);
-        auto [result, execution_time] = measure_execution_time(make_ParallelQuickSort_sort, vec, 1);
+        auto [result, execution_time] = measure_execution_time(make_ParallelQuickSort_sort, std::ref(vec), 1);
         std::cout << execution_time << std::endl;
     }
 
@@ -87,7 +87,7 @@ int main() {
 
     for (int N : sizes) {
         std::vector<int> vec = make_vector(N);
-        auto [result, execution_time] = measure_execution_time(make_ParallelQuickSort_sort, vec, 2);
+        auto [result, execution_time] = measure_execution_time(make_ParallelQuickSort_sort, std::ref(vec), 2);
         std::cout << execution_time << std::endl;
     }
 
@@ -95,7 +95,7 @@ int main() {
 
     for (int N : sizes) {
         std::vector<int> vec = make_vector(N);
-        auto [result, execution_time] = measure_execution_time(make_ParallelQuickSort_sort, vec, 4);
+        auto [result, execution_time] = measure_execution_time(make_ParallelQuickSort_sort, std::ref(vec), 4);
         std::cout << execution_time << std::endl;
     }
 
@@ -103,7 +103,7 @@ int main() {
 
     for (int N : sizes) {
         std::vector<int> vec = make_vector(N);
-        auto [result, execution_time] = measure_execution_time(make_ParallelQuickSort_sort, vec, 8);
+        auto [result, execution_time] = measure_execution_time(make_ParallelQuickSort_sort, std::ref(vec), 8);
         std::cout << execution_time << std::endl;
     }
 
